@@ -6,4 +6,8 @@
 resource "azurerm_resource_group" "Alex" {
   name     = "Alex-resources"
   location = "West Europe"
+
+  tags = {
+    Owner = "alex.frischmann@redbull.com"
+  }
 }
