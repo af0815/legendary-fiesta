@@ -39,3 +39,44 @@ resource "azurerm_subnet" "Manuel" {
   virtual_network_name = azurerm_virtual_network.Manuel.name
   address_prefixes     = ["10.0.1.0/24"]
 }
+
+
+# Define the network interface
+
+resource "azurerm_network_interface" "Manuel-nic" {
+  name                = "Manuel-nic"
+  location            = azurerm_resource_group.Manuel.location
+  resource_group_name = azurerm_resource_group.Manuel.name
+
+  ip_configuration {
+    name                          = "Manuel-ipcfg"
+    subnet_id                     = azurerm_subnet.Manuel.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+# Define the virtual machine
+resource "azurerm_linux_virtual_machine" "vm" {
+  name                = "Manuel-vm"
+  location            = azurerm_resource_group.Manuel.location
+  resource_group_name = azurerm_resource_group.Manuel.name
+  network_interface_ids = [
+    azurerm_network_interface.Manuel-nic.id,
+  ]
+  size               = "Standard_DS1_v2"
+  admin_username     = "Manuel"
+  admin_password     = "34FDA$#214f"  # For demonstration purposes only. Use secure methods for production.
+  disable_password_authentication = "false"
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+  }
+}
