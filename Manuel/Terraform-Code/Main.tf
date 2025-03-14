@@ -52,8 +52,11 @@ resource "azurerm_network_interface" "Manuel-nic" {
     name                          = "Manuel-ipcfg"
     subnet_id                     = azurerm_subnet.Manuel.id
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.my_terraform_public_ip.id
   }
 }
+
+
 
 # Define the virtual machine
 resource "azurerm_linux_virtual_machine" "vm" {
@@ -63,7 +66,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   network_interface_ids = [
     azurerm_network_interface.Manuel-nic.id,
   ]
-  size               = "Standard_DS1_v2"
+  size               = "Standard_B1s"
   admin_username     = "Manuel"
   admin_password     = "34FDA$#214f"  # For demonstration purposes only. Use secure methods for production.
   disable_password_authentication = "false"
@@ -78,5 +81,16 @@ resource "azurerm_linux_virtual_machine" "vm" {
     offer     = "UbuntuServer"
     sku       = "18.04-LTS"
     version   = "latest"
+  
   }
 }
+
+# Create public IPs
+resource "azurerm_public_ip" "my_terraform_public_ip" {
+  name                = "myPublicIP"
+  location            = azurerm_resource_group.Manuel.location
+  resource_group_name = azurerm_resource_group.Manuel.name
+  allocation_method   = "Dynamic"
+}
+
+
