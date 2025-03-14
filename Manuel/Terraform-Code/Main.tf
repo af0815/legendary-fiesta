@@ -25,3 +25,17 @@ resource "azurerm_resource_group" "Manuel" {
 }
 
 
+# Create a virtual network within the resource group
+resource "azurerm_virtual_network" "Manuel" {
+  name                = "Manuel-network"
+  resource_group_name = azurerm_resource_group.Manuel.name
+  location            = azurerm_resource_group.Manuel.location
+  address_space       = ["10.0.0.0/16"]
+}
+
+resource "azurerm_subnet" "Manuel" {
+  name                 = "Manuel-subnet"
+  resource_group_name  = azurerm_resource_group.Manuel.name
+  virtual_network_name = azurerm_virtual_network.Manuel.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
