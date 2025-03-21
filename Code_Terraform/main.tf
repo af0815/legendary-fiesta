@@ -74,7 +74,7 @@ module "vm-Alex" {
   image_version         = "latest"
   computer_name         = "alex-computer"
   admin_username        = "alex-admin"
-  admin_password        = "P@ssw0rd123!"
+  admin_password        = "P@ssw0rd123!!"
   disable_password_authentication = false
   public_ip_sku         = "Standard"
   public_ip_allocation  = "Static"
