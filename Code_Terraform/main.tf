@@ -21,7 +21,7 @@ module "vnet-Manuel" {
   source                = "./modules/vnet"
   vnet_name             = "manuel-vnet"
   address_space         = ["10.0.0.0/16"]
-  location              = "East US"
+  location              = "West Europe"
   resource_group_name   = azurerm_resource_group.Manuel.name
   subnet_name           = "manuel-subnet"
   subnet_prefixes       = ["10.0.1.0/24"]
@@ -31,7 +31,7 @@ module "vnet-Alex" {
   source                = "./modules/vnet"
   vnet_name             = "alex-vnet"
   address_space         = ["10.1.0.0/16"]
-  location              = "East US"
+  location              = "West Europe"
   resource_group_name   = azurerm_resource_group.Alex.name
   subnet_name           = "alex-subnet"
   subnet_prefixes       = ["10.1.1.0/24"]
